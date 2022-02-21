@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="/src/favicon.svg"
+        />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Vite App</title>
+        <style>
+            .react-tag-input__input:focus {
+                border-color: rgb(239, 68, 68);
+                transform: scaleX(1.05);
+            }
+            .react-tag-input__input {
+                outline: 2px solid transparent;
+                outline-offset: 2px;
+                padding: 0.25rem;
+                border-color: rgb(252, 165, 165);
+                border-width: 2px;
+                border-radius: 0.375rem;
+                transition: all cubic-bezier(0.4, 0, 0.2, 1)
+                    150ms;
+            }
+            .react-tag-input__tag__content {
+                background-color: #cbd5e1;
+                border-radius: .25rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
+</html>
