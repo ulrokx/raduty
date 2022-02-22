@@ -23,13 +23,17 @@ export const InputField = (
                     type={props.type}
                     placeholder={props.placeholder}
                     className={`${
-                        props.type == "checkbox" ? "form-checkbox h-3 w-3 text-red-500" : ""
-                    } border-2 border-red-300 rounded-md p-1 outline-none focus:scale-105 focus:border-red-500 transition-all`}
+                        props.type == "checkbox" && ["Friday", "Saturday"].includes(props.label)
+                            ? "form-checkbox h-5 w-5 text-blue-500 focus:border-blue-500 hover:border-blue-500 border-blue-300 rounded-sm"
+                            : props.type == "checkbox"
+                            ? "form-checkbox h-5 w-5 text-red-500 focus:border-red-500 hover:border-red-500 border-red-300 rounded-sm"
+                            : "border-red-300 p-1 focus:scale-105 focus:border-red-500 transition-all rounded-md"
+                    } border-2 outline-none`}
                 />
                 {props.type == "checkbox" ? props.label : null}
             </label>
-            {meta.touched && meta.error ? (
-                <div className="error">{meta.error}</div>
+            {meta.touched && meta.error && props.type != "checkbox" ? (
+                <div className="text-red-500">{meta.error}</div>
             ) : null}
         </>
     );

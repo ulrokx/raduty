@@ -2,6 +2,7 @@ import ReactTagInput from "@pathofdev/react-tag-input";
 import { useState } from "react";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import dayjs from "dayjs";
+import { BEGIN_DATE, END_DATE } from "../constants/dates";
 dayjs.extend(customParseFormat);
 
 interface MoreProps {
@@ -10,33 +11,46 @@ interface MoreProps {
 
 export const DateInput = (props: MoreProps) => {
     const [tags, setTags] = useState<string[]>([]);
-    const [error, setError] = useState(true);
+    const [error, setError] = useState("");
     return (
-        <div className="flex flex-col items-center">
-            <ReactTagInput
-                validator={(value) => {
-                    const isValid = dayjs(
-                        value,
-                        "MM/DD/YYYY"
-                    ).isValid();
-                    if (!isValid) {
-                        setError(true);
-                    } else {
-                        setError(false);
-                    }
-                    return isValid;
-                }}
-                tags={tags}
-                placeholder="mm/dd/yyyy"
-                removeOnBackspace={true}
-                onChange={(n) => {
-                    setTags(n);
-                    props.onTagChange("dates", n);
-                }}
-            />
-            {error && (
-                <p>Enter a date in the format mm/dd/yyyy</p>
-            )}
+        <div className="flex flex-col items-center w-full">
+            <label className="text-lg w-full">
+                Requested Days Off
+                <ReactTagInput
+                    validator={(value) => {
+                        const date = dayjs(
+                            value,
+                            "M/D/YYYY",
+                            true
+                        );
+                        if (!date.isValid()) {
+                            setError(
+                                "Use the format mm/dd/yyyy"
+                            );
+                            return false;
+                        } else if (tags.includes(value.trim())) {
+                            setError("Date already entered");
+                            return false;
+                        } else if (
+                            date.isBefore(BEGIN_DATE) ||
+                            date.isAfter(END_DATE)
+                        ) {
+                            setError("Date not in range");
+                            return false;
+                        } else {
+                            setError("");
+                            return true;
+                        }
+                    }}
+                    tags={tags}
+                    placeholder="mm/dd/yyyy"
+                    onChange={(n) => {
+                        setTags(n);
+                        props.onTagChange("dates", n);
+                    }}
+                />
+                <p className="text-red-500 text-base">{error}</p>
+            </label>
         </div>
     );
 };

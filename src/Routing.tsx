@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { Header } from "./components/Header";
 import { Create } from "./pages/Create";
 import { Generator } from "./pages/Generator";
@@ -13,6 +13,10 @@ export const Routing: React.FC<RoutingProps> = ({}) => {
         <>
             <Header />
             <Routes>
+                <Route
+                    index
+                    element={<Navigate to="/schedule" />}
+                />
                 <Route path="/schedule" element={<Schedule />} />
                 <Route
                     path="/generator"
