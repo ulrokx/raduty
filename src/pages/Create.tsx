@@ -3,74 +3,10 @@ import React from "react";
 import { CreateSideInfo } from "../components/CreateSideInfo";
 import { DateInput } from "../components/DateInput";
 import { InputField } from "../components/InputField";
-import * as Yup from "yup";
-import dayjs from "dayjs";
-
-const daysOfWeek = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-];
-
-const weekDays = daysOfWeek.slice(0, 5);
-
-const Schema = Yup.object().shape({
-    first: Yup.string()
-        .min(2, "Too short!")
-        .max(16, "Too long!")
-        .required("Required!"),
-    last: Yup.string()
-        .min(2, "Too short!")
-        .max(16, "Too long!")
-        .required("Required!"),
-    cwid: Yup.string()
-        .matches(/[0-9]{8}/, "Invalid ID!")
-        .required("Required!"),
-    email: Yup.string()
-        .required("Required!")
-        .email("Invalid mail!")
-        .matches(/stevens.edu/gi, "Use your school email!"),
-    days: Yup.array()
-        .test(
-            "weekend",
-            "Select at least one weekend day!",
-            (a) => {
-                if (a) {
-                    return (
-                        a.includes(daysOfWeek[5]) ||
-                        a.includes(daysOfWeek[6])
-                    );
-                }
-                return false;
-            }
-        )
-        .test("weekdays", "Select at least 3 weekdays!", (a) => {
-            if (a) {
-                let count = 0;
-                a.forEach((d) => {
-                    if (weekDays.includes(d)) count++;
-                });
-                if(count >= 3) return true
-            }
-            return false;
-        }),
-    dates: Yup.array().test("dates", "Invalid dates!", (a) => {
-        if (a) {
-            let isGood = true;
-            a.forEach((d) => {
-                if (!dayjs(d, "M/D/YYYY", true).isValid()) {
-                    isGood = false;
-                }
-            });
-            return isGood;
-        }
-        return true;
-    }),
-});
+import { useMutation, useQuery } from "react-query";
+import { Schema } from "../util/availabilitySchema";
+import { daysOfWeek } from "../util/daysOfWeek";
+import axios from "axios";
 
 interface CreateProps {}
 
@@ -84,6 +20,12 @@ interface IFormValues {
 }
 
 export const Create: React.FC<CreateProps> = ({}) => {
+    const { mutate } = useMutation((formData) => {
+        return axios.post(
+            "http://localhost:6969/api/v1/availability",
+            formData
+        );
+    });
     return (
         <div className="flex w-[75%] mx-auto flex-col items-center">
             <h1 className="text-5xl font-medium my-8">
@@ -102,14 +44,15 @@ export const Create: React.FC<CreateProps> = ({}) => {
                         }}
                         validationSchema={Schema}
                         onSubmit={(values) => {
-                            console.log(values);
+                            mutate(values as any, {
+                                onSuccess: (d) => console.log(d),
+                            });
                         }}>
                         {({
                             setFieldValue,
                             errors,
                             touched,
                         }) => {
-                            console.log(errors);
                             return (
                                 <Form className="flex flex-col gap-x-8 flex-grow-0">
                                     <div className="flex md:flex-row flex-col justify-between">
