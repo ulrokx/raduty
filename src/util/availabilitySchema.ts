@@ -1,6 +1,7 @@
 import * as Yup from "yup";
 import dayjs from "dayjs";
 import { daysOfWeek, weekDays } from "./daysOfWeek";
+import axios from "axios";
 
 export const Schema = Yup.object().shape({
     first: Yup.string()
@@ -14,6 +15,26 @@ export const Schema = Yup.object().shape({
     cwid: Yup.string()
         .matches(/[0-9]{8}/, "Invalid ID!")
         .required("Required!"),
+    // .test(
+    //     "alreadyreg",
+    //     "You have already registered!",
+    //     async (v) => {
+    //         let good = false;
+    //         if (v?.length == 8) {
+    //             const res = await axios.get(
+    //                 "http://localhost:6969/api/v1/availability/already",
+    //                 {
+    //                     data: {
+    //                         cwid: v,
+    //                     },
+
+    //                 }
+    //             );
+    //             console.log(res)
+    //         }
+    //         return good;
+    //     }
+    // ),
     email: Yup.string()
         .required("Required!")
         .email("Invalid mail!")
@@ -36,11 +57,9 @@ export const Schema = Yup.object().shape({
             if (a) {
                 let count = 0;
                 a.forEach((d) => {
-                    if (weekDays.includes(d))
-                        count++;
+                    if (weekDays.includes(d)) count++;
                 });
-                if (count >= 3)
-                    return true;
+                if (count >= 3) return true;
             }
             return false;
         }),
