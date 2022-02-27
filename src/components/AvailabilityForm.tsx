@@ -31,9 +31,12 @@ export const AvailabilityForm: React.FC<
             email: "",
             days: [],
             dates: [],
+            towers: false,
+            group: 1
           }}
           validationSchema={Schema}
           onSubmit={(values) => {
+            values.group = values.towers ? 2 : 1
             postMutation.mutate(values as any, {
               onSuccess: (d) => console.log(d),
             });
@@ -87,6 +90,7 @@ export const AvailabilityForm: React.FC<
                   </div>
                   <div className="basis-1/2">
                     <DateInput onTagChange={setFieldValue} />
+                    <InputField label="Towers?" name="towers" type="checkbox"/>
                   </div>
                 </div>
                 <button
