@@ -1,19 +1,11 @@
-import { Field, Form, Formik } from "formik";
-import React from "react";
-import { CreateSideInfo } from "../components/CreateSideInfo";
-import { DateInput } from "../components/DateInput";
-import { InputField } from "../components/InputField";
-import { useMutation, useQuery } from "react-query";
-import { Schema } from "../util/availabilitySchema";
-import { daysOfWeek } from "../util/daysOfWeek";
-import axios from "axios";
-import { AvailabilityForm } from "../components/AvailabilityForm";
-import {
-  GridLoader,
-  HashLoader,
-  PropagateLoader,
-} from "react-spinners";
 import { css } from "@emotion/react";
+import axios from "axios";
+import React from "react";
+import { useMutation } from "react-query";
+import {
+  GridLoader
+} from "react-spinners";
+import { AvailabilityForm } from "../components/AvailabilityForm";
 import { FormAftermath } from "../components/FormAftermath";
 
 interface CreateProps {}
@@ -28,7 +20,7 @@ interface IFormValues {
 }
 
 const loaderCSS = css`
-  margin-top: 3rem;
+  margin-top: 8rem;
 `;
 
 export const Create: React.FC<CreateProps> = ({}) => {

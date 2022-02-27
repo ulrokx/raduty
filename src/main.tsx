@@ -8,9 +8,7 @@ const queryClient = new QueryClient();
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
     <BrowserRouter>
-      <React.StrictMode>
         <Routing />
-      </React.StrictMode>
     </BrowserRouter>
   </QueryClientProvider>,
   document.getElementById('root')

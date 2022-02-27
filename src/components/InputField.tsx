@@ -1,5 +1,4 @@
 import { FieldHookConfig, useField } from "formik";
-import { HTMLAttributes } from "react";
 
 interface OtherInputProps {
     label: string;
