@@ -7,6 +7,7 @@ import { daysOfWeek } from "../util/daysOfWeek";
 import { CreateSideInfo } from "./CreateSideInfo";
 import { DateInput } from "./DateInput";
 import { InputField } from "./InputField";
+import { SubmitButton } from "./SubmitButton";
 
 interface AvailabilityFormProps {
   postMutation: UseMutationResult<
@@ -32,11 +33,11 @@ export const AvailabilityForm: React.FC<
             days: [],
             dates: [],
             towers: false,
-            group: 1
+            group: 1,
           }}
           validationSchema={Schema}
           onSubmit={(values) => {
-            values.group = values.towers ? 2 : 1
+            values.group = values.towers ? 2 : 1;
             postMutation.mutate(values as any, {
               onSuccess: (d) => console.log(d),
             });
@@ -86,18 +87,20 @@ export const AvailabilityForm: React.FC<
                       );
                     })}
 
-                      <div className="text-base text-red-500">{touched.days && errors.days}</div>
+                    <div className="text-base text-red-500">
+                      {touched.days && errors.days}
+                    </div>
                   </div>
                   <div className="basis-1/2">
                     <DateInput onTagChange={setFieldValue} />
-                    <InputField label="Towers?" name="towers" type="checkbox"/>
+                    <InputField
+                      label="Towers?"
+                      name="towers"
+                      type="checkbox"
+                    />
                   </div>
                 </div>
-                <button
-                  type="submit"
-                  className="mt-4 hover:scale-105 transition-all border-2 rounded-md bg-red-500 text-2xl text-white p-3">
-                  Submit
-                </button>
+                    <SubmitButton>Submit</SubmitButton>
               </Form>
             );
           }}

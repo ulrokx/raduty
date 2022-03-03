@@ -16,11 +16,12 @@ export const Routing: React.FC<RoutingProps> = ({}) => {
       <Routes>
         <Route index element={<Navigate to="schedule" />} />
         <Route path="schedule" element={<Schedule />} />
-        <Route path="create" element={<Create />}/>
+        <Route path="create" element={<Create />} />
         <Route path="config" element={<Config />}>
-            <Route path="generate" element={<Generate/>}/>
-            <Route path="assistants" element={<Assistants/>}/>
-            <Route path="groups" />
+          <Route index element={<Navigate to="assistants" />} />
+          <Route path="generate" element={<Generate />} />
+          <Route path="assistants" element={<Assistants />} />
+          <Route path="groups" />
         </Route>
       </Routes>
     </>
