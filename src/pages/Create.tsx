@@ -19,7 +19,7 @@ interface IFormValues {
   dates: string[];
 }
 
-const loaderCSS = css`
+export const loaderCSS = css`
   margin-top: 8rem;
 `;
 
