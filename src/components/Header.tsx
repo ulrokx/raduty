@@ -14,10 +14,7 @@ export const Header: React.FC<HeaderProps> = ({}) => {
                     <Link to="/create">Create</Link>
                 </li>
                 <li className="hover:scale-105 transition-all ml-auto">
-                    <Link to="generator">Generator</Link>
-                </li>
-                <li className="hover:scale-105 transition-all">
-                    <Link to="modify">Modify</Link>
+                    <Link to="/config">Config</Link>
                 </li>
             </ul>
         </header>

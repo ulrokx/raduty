@@ -1,20 +1,26 @@
-import moment from "moment";
-import React, { useEffect, useState } from "react";
-import Calendar from "@toast-ui/react-calendar";
-import "tui-calendar/dist/tui-calendar.css";
-import "tui-date-picker/dist/tui-date-picker.css";
-import "tui-time-picker/dist/tui-time-picker.css";
+import axios from "axios";
+import React from "react";
+import { ReactEmbeddedGoogleCalendar } from "react-embedded-google-calendar";
+import { useQuery } from "react-query";
 interface ScheduleProps {}
 
 export const Schedule: React.FC<ScheduleProps> = ({}) => {
+  const {data, isLoading, isError, error} = useQuery("cal-url", ({ signal }) => {
+    return axios.get("http://localhost:6969/api/v1/calendar/get", {
+      signal,
+    });
+  });
+  if(isLoading) {
+    return <div>loading...</div>
+  }
+  if(isError) {
+    return <div>error: {error}</div>
+  }
   return (
-    <div className="m-8 border-2 border-black">
-      <Calendar
-        height="80vh"
-        isReadOnly={true}
-        view="month"
-        onchange
-        usageStatistics={false}
+    <div className="p-8">
+      <ReactEmbeddedGoogleCalendar
+        height="700px"
+        publicUrl={`https://calendar.google.com/calendar/embed?src=${data?.data.Schedule.Calendar}&ctz=America%2FNew_York`}
       />
     </div>
   );
