@@ -6,10 +6,13 @@ import { GridLoader } from "react-spinners";
 import { InputField } from "../components/InputField";
 import { SubmitButton } from "../components/SubmitButton";
 import { loaderCSS } from "./Create";
-import DateTime from "react-datetime";
 import "react-datetime/css/react-datetime.css";
+import { GenerateSideInfo } from "../components/GenerateSideInfo";
+import { DateTimeInput } from "../components/DateTimeInput";
+import { generateSchema } from "../util/yupSchemas";
 
 interface GenerateProps {}
+
 export const Generate: React.FC<GenerateProps> = ({}) => {
   const {
     data: groups,
@@ -25,9 +28,8 @@ export const Generate: React.FC<GenerateProps> = ({}) => {
   if (isLoading) {
     return <div>loading</div>;
   }
-  const ids = [...groups?.data.map((g: any) => g.ID)];
   return (
-    <div>
+    <div className="flex flex-row shadow-md bg-white mt-2 p-4">
       <Suspense
         fallback={
           <GridLoader
@@ -37,6 +39,7 @@ export const Generate: React.FC<GenerateProps> = ({}) => {
           />
         }>
         <Formik
+          validationSchema={generateSchema}
           initialValues={{
             name: "",
             groups: [],
@@ -46,9 +49,12 @@ export const Generate: React.FC<GenerateProps> = ({}) => {
           onSubmit={(v) => {
             console.log(v);
           }}>
-          {({ initialValues, values, setFieldValue }) => (
+          {({ values, setFieldValue, touched, errors }) => (
             <Form>
               <InputField label="Schedule Name" name="name" />
+              <p className="text-lg mt-2">
+                Groups to Include in Generated Schedule
+              </p>
               {groups?.data.map((g: any, i: number) => {
                 return (
                   <InputField
@@ -60,23 +66,19 @@ export const Generate: React.FC<GenerateProps> = ({}) => {
                   />
                 );
               })}
-              <DateTime
-                timeFormat={false}
-                value={values.begin}
-                onChange={(v) => setFieldValue("begin", v)}
-                strictParsing
-              />
-              <DateTime
-                timeFormat={false}
-                value={values.end}
-                onChange={(v) => setFieldValue("end", v)}
-                strictParsing
-              />
+              <p className="text-red-500">
+                {touched.groups && errors.groups
+                  ? errors.groups
+                  : null}
+              </p>
+              <DateTimeInput name="begin" label="Begin Date" />
+              <DateTimeInput name="end" label="End Date" />
               <SubmitButton>Create</SubmitButton>
             </Form>
           )}
         </Formik>
       </Suspense>
+      <GenerateSideInfo />
     </div>
   );
 };

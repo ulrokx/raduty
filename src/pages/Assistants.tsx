@@ -36,7 +36,6 @@ export const Assistants: React.FC<AssistantsProps> = ({}) => {
         };
       });
       setAssistants(toSet);
-      console.log(toSet);
     }
   }, [data]);
   const tableInstance = useTable(

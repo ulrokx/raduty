@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios";
 import { Formik, Form } from "formik";
 import React from "react";
 import { UseMutationResult } from "react-query";
-import { Schema } from "../util/availabilitySchema";
+import { availabilitySchema } from "../util/yupSchemas";
 import { daysOfWeek } from "../util/daysOfWeek";
 import { CreateSideInfo } from "./CreateSideInfo";
 import { DateInput } from "./DateInput";
@@ -35,8 +35,9 @@ export const AvailabilityForm: React.FC<
             towers: false,
             group: 1,
           }}
-          validationSchema={Schema}
+          validationSchema={availabilitySchema}
           onSubmit={(values) => {
+            console.log(values)
             values.group = values.towers ? 2 : 1;
             postMutation.mutate(values as any, {
               onSuccess: (d) => console.log(d),

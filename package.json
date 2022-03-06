@@ -11,7 +11,6 @@
     "@pathofdev/react-tag-input": "^1.0.7",
     "@types/react-table": "^7.7.9",
     "axios": "^0.26.0",
-    "dayjs": "^1.10.7",
     "formik": "^2.2.9",
     "moment": "^2.29.1",
     "react": "^17.0.2",
