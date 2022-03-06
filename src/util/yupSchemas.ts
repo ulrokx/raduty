@@ -27,6 +27,11 @@ export const generateSchema = Yup.object().shape({
         return false;
       },
     }),
+  perShift: Yup.number()
+    .required("Required!")
+    .integer("Must be a number")
+    .max(4, "Too high!")
+    .min(1, "Too low!"),
 });
 
 export const availabilitySchema = Yup.object().shape({

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Form, Formik } from "formik";
 import React, { Suspense } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { GridLoader } from "react-spinners";
 import { InputField } from "../components/InputField";
 import { SubmitButton } from "../components/SubmitButton";
@@ -22,6 +22,9 @@ export const Generate: React.FC<GenerateProps> = ({}) => {
   } = useQuery("groups", (signal) => {
     return axios.get("http://localhost:6969/api/v1/groups/get");
   });
+  const mutation = useMutation('generateSchedule', (values) => {
+    return axios.post("http://localhost:6969/api/v1/schedule/generate", values)
+  })
   if (isError) {
     return <div>error: {error}</div>;
   }
@@ -38,11 +41,12 @@ export const Generate: React.FC<GenerateProps> = ({}) => {
             groups: [],
             begin: new Date(),
             end: new Date(),
+            perShift: 2
           }}
           onSubmit={(v) => {
-            console.log(v);
+            mutation.mutate(v as any, {onError: (e) => console.log(e)})
           }}>
-          {({ values, setFieldValue, touched, errors }) => (
+          {({ touched, errors }) => (
             <Form>
               <InputField label="Schedule Name" name="name" />
               <p className="text-lg mt-2">
@@ -64,6 +68,7 @@ export const Generate: React.FC<GenerateProps> = ({}) => {
                   ? errors.groups
                   : null}
               </p>
+              <InputField label="RA's Per Shift:" name="perShift" type="number" />
               <DateTimeInput name="begin" label="Begin Date" />
               <DateTimeInput name="end" label="End Date" />
               <SubmitButton>Create</SubmitButton>
