@@ -6,7 +6,7 @@ import { Routing } from './Routing'
 import { QueryClient, QueryClientProvider } from 'react-query'
 const queryClient = new QueryClient();
 ReactDOM.render(
-  <QueryClientProvider client={queryClient}>
+  <QueryClientProvider client={queryClient} >
     <BrowserRouter>
         <Routing />
     </BrowserRouter>

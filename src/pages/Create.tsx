@@ -7,6 +7,7 @@ import {
 } from "react-spinners";
 import { AvailabilityForm } from "../components/AvailabilityForm";
 import { FormAftermath } from "../components/FormAftermath";
+import { Loader } from "../components/Loader";
 
 interface CreateProps {}
 
@@ -19,9 +20,6 @@ interface IFormValues {
   dates: string[];
 }
 
-export const loaderCSS = css`
-  margin-top: 8rem;
-`;
 
 export const Create: React.FC<CreateProps> = ({}) => {
   const postMutation = useMutation((formData) => {
@@ -33,7 +31,7 @@ export const Create: React.FC<CreateProps> = ({}) => {
   return (
     <div className="flex w-[75%] mx-auto flex-col items-center">
       {postMutation.isLoading ? (
-        <GridLoader css={loaderCSS} size={50} color="#ef4444" />
+      <Loader />
       ) : postMutation.isSuccess || postMutation.isError ? (
         <FormAftermath postMutation={postMutation} />
       ) : (

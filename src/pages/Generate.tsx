@@ -5,11 +5,11 @@ import { useQuery } from "react-query";
 import { GridLoader } from "react-spinners";
 import { InputField } from "../components/InputField";
 import { SubmitButton } from "../components/SubmitButton";
-import { loaderCSS } from "./Create";
 import "react-datetime/css/react-datetime.css";
 import { GenerateSideInfo } from "../components/GenerateSideInfo";
 import { DateTimeInput } from "../components/DateTimeInput";
 import { generateSchema } from "../util/yupSchemas";
+import { Loader } from "../components/Loader";
 
 interface GenerateProps {}
 
@@ -30,14 +30,7 @@ export const Generate: React.FC<GenerateProps> = ({}) => {
   }
   return (
     <div className="flex flex-row shadow-md bg-white mt-2 p-4">
-      <Suspense
-        fallback={
-          <GridLoader
-            css={loaderCSS}
-            size={50}
-            color="#ef4444"
-          />
-        }>
+      <Suspense fallback={<Loader />}>
         <Formik
           validationSchema={generateSchema}
           initialValues={{
@@ -53,7 +46,7 @@ export const Generate: React.FC<GenerateProps> = ({}) => {
             <Form>
               <InputField label="Schedule Name" name="name" />
               <p className="text-lg mt-2">
-                Groups to Include in Generated Schedule
+                Groups to Include in Generated Schedule:
               </p>
               {groups?.data.map((g: any, i: number) => {
                 return (

@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 
 interface ConfigProps {}
 
-const tabs = ["Generate", "Assistants", "Groups"] as const;
+const tabs = ["Generate", "Assistants", "Groups", "Schedules"] as const;
 type Tabs = typeof tabs[number];
 
 export const Config: React.FC<ConfigProps> = ({}) => {
@@ -13,6 +13,8 @@ export const Config: React.FC<ConfigProps> = ({}) => {
       ? "Generate"
       : location.pathname.includes("oup")
       ? "Groups"
+      : location.pathname.includes("chedules")
+      ? "Schedules"
       :"Assistants"
   );
   return (

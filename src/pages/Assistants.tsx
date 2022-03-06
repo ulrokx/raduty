@@ -1,7 +1,15 @@
 import axios from "axios";
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  Suspense,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useQuery } from "react-query";
+import { GridLoader } from "react-spinners";
 import { Column, useFlexLayout, useTable } from "react-table";
+import { Loader } from "../components/Loader";
+import { Table } from "../components/Table";
 interface AssistantsProps {}
 export const Assistants: React.FC<AssistantsProps> = ({}) => {
   const columns = useMemo(
@@ -11,6 +19,8 @@ export const Assistants: React.FC<AssistantsProps> = ({}) => {
         { Header: "First", accessor: "first" },
         { Header: "Last", accessor: "last" },
         { Header: "Updated", accessor: "UpdatedAt" },
+        { Header: "Group ID", accessor: "groupId" },
+        { Header: "Group", accessor: "group.Name" },
       ] as Array<Column>,
     []
   );
@@ -38,53 +48,20 @@ export const Assistants: React.FC<AssistantsProps> = ({}) => {
       setAssistants(toSet);
     }
   }, [data]);
-  const tableInstance = useTable(
-    { columns, data: assistants },
-    useFlexLayout
-  );
   if (isLoading) {
     return <div>loading</div>;
   }
   if (isError) {
     return <div>error: {error}</div>;
   }
-
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = tableInstance;
+  console.log(data);
   return (
-    <table {...getTableProps()} className="w-full border-2 shadow-lg">
-      <thead>
-        {headerGroups.map((headerGroup) => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()} className="bg-red-200 border-2 border-black-500 p-1">
-                {column.render("Header")}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()} className="hover:bg-slate-400 odd:bg-white even:bg-slate-200 py-1">
-              {row.cells.map((cell) => {
-                return (
-                  <td {...cell.getCellProps()}>
-                    {cell.render("Cell")}
-                  </td>
-                );
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
+    <>
+      {data ? (
+        <Table data={assistants} columns={columns}></Table>
+      ) : (
+        <Loader />
+      )}
+    </>
   );
 };

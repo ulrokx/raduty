@@ -6,6 +6,8 @@ import { Config } from "./pages/Config";
 import { Schedule } from "./pages/Schedule";
 import { Generate } from "./pages/Generate";
 import { Assistants } from "./pages/Assistants";
+import { Groups } from "./pages/Groups";
+import { Schedules } from "./pages/Schedules";
 
 interface RoutingProps {}
 
@@ -21,7 +23,8 @@ export const Routing: React.FC<RoutingProps> = ({}) => {
           <Route index element={<Navigate to="assistants" />} />
           <Route path="generate" element={<Generate />} />
           <Route path="assistants" element={<Assistants />} />
-          <Route path="groups" />
+          <Route path="groups" element={<Groups />} />
+          <Route path="schedules" element={<Schedules />} />
         </Route>
       </Routes>
     </>
