@@ -6,7 +6,7 @@ interface ScheduleProps {}
 
 export const Schedule: React.FC<ScheduleProps> = ({}) => {
   const {data, isLoading, isError, error} = useQuery("cal-url", ({ signal }) => {
-    return axios.get("http://localhost:6969/api/v1/calendar/get", {
+    return axios.get("http://localhost:8080/api/v1/calendar/get", {
       signal,
     });
   });
@@ -15,6 +15,9 @@ export const Schedule: React.FC<ScheduleProps> = ({}) => {
   }
   if(isError) {
     return <div>error: {error}</div>
+  }
+  if(data?.data.Schedule.Calendar === "") {
+    return <div>No calendar set</div>
   }
   return (
     <div className="p-8">

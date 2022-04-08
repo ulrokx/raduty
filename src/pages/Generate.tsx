@@ -20,10 +20,10 @@ export const Generate: React.FC<GenerateProps> = ({}) => {
     error,
     isLoading,
   } = useQuery("groups", (signal) => {
-    return axios.get("http://localhost:6969/api/v1/groups/get");
+    return axios.get("http://localhost:8080/api/v1/groups/get");
   });
   const mutation = useMutation('generateSchedule', (values) => {
-    return axios.post("http://localhost:6969/api/v1/schedule/generate", values)
+    return axios.post("http://localhost:8080/api/v1/schedule/generate", values)
   })
   if (isError) {
     return <div>error: {error}</div>;

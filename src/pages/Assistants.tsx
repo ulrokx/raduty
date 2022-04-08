@@ -29,7 +29,7 @@ export const Assistants: React.FC<AssistantsProps> = ({}) => {
     "assistants",
     ({ signal }) => {
       return axios.get(
-        "http://localhost:6969/api/v1/assistants/all",
+        "http://localhost:8080/api/v1/assistants/all",
         { signal }
       );
     }

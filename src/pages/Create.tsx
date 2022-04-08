@@ -24,7 +24,7 @@ interface IFormValues {
 export const Create: React.FC<CreateProps> = ({}) => {
   const postMutation = useMutation((formData) => {
     return axios.post(
-      "http://localhost:6969/api/v1/availability",
+      "http://localhost:8080/api/v1/availability",
       formData
     );
   });

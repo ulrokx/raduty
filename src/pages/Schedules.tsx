@@ -24,7 +24,7 @@ export const Schedules: React.FC<SchedulesProps> = ({}) => {
     "schedules",
     ({ signal }) => {
       return axios.get(
-        "http://localhost:6969/api/v1/schedule/get",
+        "http://localhost:8080/api/v1/schedule/get",
         {
           signal,
         }

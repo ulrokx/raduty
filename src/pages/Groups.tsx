@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useQuery } from "react-query";
+import { GroupForm } from "../components/GroupForm";
 import { GroupsTable } from "../components/GroupsTable";
 import { Loader } from "../components/Loader";
 
@@ -11,7 +12,7 @@ export const Groups: React.FC<GroupsProps> = ({}) => {
     "groups",
     ({ signal }) => {
       return axios.get(
-        "http://localhost:6969/api/v1/groups/get",
+        "http://localhost:8080/api/v1/groups/get",
         { signal }
       );
     }
@@ -23,6 +24,13 @@ export const Groups: React.FC<GroupsProps> = ({}) => {
     return <div>error</div>;
   }
   return (
-    <div>{data?.data ? <GroupsTable data={data.data} /> : null}</div>
+    <>
+      <div>
+        {data?.data ? <GroupsTable data={data.data} /> : null}
+      </div>
+      <div>
+        <GroupForm groups={data?.data}/>
+      </div>
+    </>
   );
 };

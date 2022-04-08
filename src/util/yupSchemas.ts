@@ -53,7 +53,7 @@ export const availabilitySchema = Yup.object().shape({
   //         let good = false;
   //         if (v?.length == 8) {
   //             const res = await axios.get(
-  //                 "http://localhost:6969/api/v1/availability/already",
+  //                 "http://localhost:8080/api/v1/availability/already",
   //                 {
   //                     data: {
   //                         cwid: v,
